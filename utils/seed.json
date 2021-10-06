@@ -1,0 +1,5 @@
+{
+  "random.seed": 246,
+  "np.random.seed": 4812,
+  "np.random.default_rng": 42
+}
