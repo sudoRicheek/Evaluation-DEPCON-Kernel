@@ -19,7 +19,7 @@ from utils.seed_handler import load_seed
 from utils.kmeans import plain_kmeans
 from utils.poly_kern import kernel_k_means_poly
 from utils.rbf_kernel_k_means import kkm_rbf
-from utils.dep_con_kernel_k_means import kernel_k_means
+from utils.dep_con_kernel_k_means import kernel_k_means_depcon
 
 parser = argparse.ArgumentParser(description='Run tests.')
 parser.add_argument('-V', type=int, help='number of vertices')
@@ -321,7 +321,7 @@ def multiple_runs_comparison(V=10, K=6, p=0.1, sample_size=600, runs=50, SAME_TC
                                1, 'poly': -1, 'pkmeans': -1}
             best_scores = {'rbf': -1, 'depcon': -1, 'poly': -1, 'pkmeans': -1}
             for num_clus in search_range:
-                for method_name, algo in [('depcon', kernel_k_means), ('rbf', kkm_rbf),
+                for method_name, algo in [('depcon', kernel_k_means_depcon), ('rbf', kkm_rbf),
                                           ('poly', kernel_k_means_poly), ('pkmeans', plain_kmeans)]:
                     clusters_iter[method_name] = algo(
                         sample_data, num_clus=num_clus)
@@ -342,7 +342,7 @@ def multiple_runs_comparison(V=10, K=6, p=0.1, sample_size=600, runs=50, SAME_TC
             for method_name in ['rbf', 'depcon', 'poly', 'pkmeans']:
                 predictions[method_name] += [cluster_predict[method_name]]
         else:
-            for method_name, algo in [('depcon', kernel_k_means), ('rbf', kkm_rbf),
+            for method_name, algo in [('depcon', kernel_k_means_depcon), ('rbf', kkm_rbf),
                                       ('poly', kernel_k_means_poly), ('pkmeans', plain_kmeans)]:
                 cluster_result[method_name] = algo(sample_data, num_clus=K)
 

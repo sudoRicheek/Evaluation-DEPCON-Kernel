@@ -129,7 +129,7 @@ def param_search_alpha(X, sr_range=[0.005, 0.01, 0.02, 0.03, 0.042, 0.043, 0.045
     return best_alpha, best_cluster
 
 
-def kernel_k_means(data, num_clus=6, kernel=dep_contrib_kernel, max_iters=100, alpha=0.05):
+def kernel_k_means_depcon(data, num_clus=6, kernel=dep_contrib_kernel, max_iters=100, alpha=0.05):
     # Load seed
     global rng
     rng = default_rng(load_seed()["np.random.default_rng"])
