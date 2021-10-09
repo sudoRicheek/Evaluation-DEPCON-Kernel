@@ -5,8 +5,9 @@ from sklearn import metrics
 
 from utils.seed_handler import load_seed
 
-rng = None
-
+# Load seed
+rng = default_rng(load_seed()["np.random.default_rng"])
+#
 
 def param_search_gamma(X, sr_range=np.float_power([2], np.arange(-10, 3)), num_clus=6, metric=metrics.calinski_harabasz_score):
     scores = []
@@ -46,11 +47,6 @@ def kkm_rbf_algo(X, num_clus=6, max_iter=300, gamma=0.1):
 
 
 def kkm_rbf(X, num_clus=6, max_iter=300, gamma=0.1):
-    # Load seed
-    global rng
-    rng = default_rng(load_seed()["np.random.default_rng"])
-    #
-
     best_gamma, best_cluster = param_search_gamma(
         X, num_clus=num_clus, metric=metrics.calinski_harabasz_score)
     print(best_gamma)

@@ -14,8 +14,9 @@ from sklearn import metrics
 
 from utils.seed_handler import load_seed
 
-rng = None
-
+# Load seed
+rng = default_rng(load_seed().get("np.random.default_rng"))
+#
 
 def dep_contrib_kernel(X, alpha=0.05):
     num_samps, num_feats = X.shape
@@ -130,11 +131,6 @@ def param_search_alpha(X, sr_range=[0.005, 0.01, 0.02, 0.03, 0.042, 0.043, 0.045
 
 
 def kernel_k_means_depcon(data, num_clus=6, kernel=dep_contrib_kernel, max_iters=100, alpha=0.05):
-    # Load seed
-    global rng
-    rng = default_rng(load_seed()["np.random.default_rng"])
-    #
-
     best_alpha, best_cluster = param_search_alpha(
         data, num_clus=num_clus, metric=metrics.calinski_harabasz_score)
     print(best_alpha)

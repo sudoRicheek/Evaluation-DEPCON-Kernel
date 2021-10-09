@@ -3,6 +3,10 @@ from numpy.random import default_rng
 
 from utils.seed_handler import load_seed
 
+# Load seed
+rng = default_rng(load_seed().get("np.random.default_rng"))
+#
+
 # take L2 norm of data (per sample) first, so that
 # polynomial kernel computes linear correlation
 def d2_kernel(x, y):
@@ -10,10 +14,6 @@ def d2_kernel(x, y):
 
 
 def kernel_k_means_poly(data, num_clus=5, kernel=d2_kernel, max_iters=100):
-    # Load seed
-    rng = default_rng(load_seed()["np.random.default_rng"])
-    #
-
     num_samps, num_feats = data.shape
     init = rng.choice(num_samps, num_clus, replace=False)
     # Normalise first!
