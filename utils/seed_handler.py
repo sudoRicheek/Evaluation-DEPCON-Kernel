@@ -12,7 +12,6 @@ def save_seed(rand=246, np_rand=4812, np_rng=42, filename="utils/seed.json"):
 def load_seed(filename="utils/seed.json"):
     """ loads seed json file. Called by all scripts that need the shared seed value """
     with open(filename, "rb") as f:
-        # change datatype accordingly (numpy.random.random() returns a float)
         data = json.load(f)
         return data
         

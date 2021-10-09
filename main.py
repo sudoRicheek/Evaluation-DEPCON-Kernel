@@ -1,9 +1,5 @@
 # Tested on:
 # ---------------
-# python==3.9.4
-# networkx==2.5.1
-# numpy==1.21.0
-# scikit-learn==0.24.2
 
 import json
 import random
@@ -14,30 +10,25 @@ from numpy.random import default_rng
 
 from sklearn import metrics
 
-from utils.seed_handler import (
+from utils import (
     load_seed
 )
 
-from utils.datagen.linear import (
+from utils.datagen import (
     generate_sample_data,
     generate_sample_data_lincorrzero,
-)
-from utils.datagen.dags import (
     gen_random_weighted_dag,
     gen_rand_dags_same_tc,
-)
-from utils.datagen.data_op import (
-    get_causal_dependencies,
     organise_data,
-)
-from utils.datagen.nonlinear import (
     gendata_nonlinear_sem
 )
 
-from utils.methods.dep_con_kernel_k_means import kernel_k_means_depcon
-from utils.methods.poly_kern import kernel_k_means_poly
-from utils.methods.rbf_kernel_k_means import kkm_rbf
-from utils.methods.kmeans import plain_kmeans
+from utils.methods import (
+    kernel_k_means_depcon,
+    kernel_k_means_poly,
+    plain_kmeans,
+    kkm_rbf
+)
 
 parser = argparse.ArgumentParser(description='Run tests.')
 parser.add_argument('-V', type=int, help='number of vertices')
@@ -179,13 +170,13 @@ def multiple_runs_comparison(V=10, K=6, p=0.1, sample_size=600, runs=50, SAME_TC
     export_dict["calinski"] = calinski
 
     if LINCORR_ZERO:
-        with open(f'Lincorrzero_{V}_{K}_{p}.json', 'w') as fp:
+        with open(f'results/Lincorrzero_{V}_{K}_{p}_{runs}.json', 'w') as fp:
             json.dump(export_dict, fp)
     elif NON_LINEAR:
-        with open(f'Nonlinear_{V}_{K}_{p}.json', 'w') as fp:
+        with open(f'results/Nonlinear_{V}_{K}_{p}_{runs}.json', 'w') as fp:
             json.dump(export_dict, fp)
     else:
-        with open(f'Linear_{V}_{K}_{p}_sametc{SAME_TC}_samemean{SAME_MEAN}.json', 'w') as fp:
+        with open(f'results/Linear_{V}_{K}_{p}_{runs}_sametc{SAME_TC}_samemean{SAME_MEAN}.json', 'w') as fp:
             json.dump(export_dict, fp)
 
 
