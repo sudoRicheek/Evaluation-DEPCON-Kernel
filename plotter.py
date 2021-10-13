@@ -105,15 +105,14 @@ def plotJSON(fp):
     plt.bar(range(len(method_names)), bar, width=barWidth, color=[
             'r', 'b', 'g', 'darkorchid'], alpha=0.7, edgecolor='black', linewidth=1.5, align='center')
     plt.xticks(range(len(method_names)), method_names_verbose, fontsize=15)
-    plt.title(
-        "Correct # cluster predictions over 100 randomized runs.\n True cluster count=6", fontsize=22)
+    plt.title(f"Correct # cluster predictions over {number_of_runs} randomized runs.\n True cluster count={clusters}", fontsize=22)
     plt.xlabel("Clustering Algorithms", fontsize=18)
     plt.ylabel("Number of correct # cluster predictions", fontsize=18)
     plt.yticks(fontsize=15)
 
     # plt.savefig("numclus_preds{}.svg".format(number_of_runs))
     plt.savefig(f"plots/numclus_preds{number_of_runs}{fileext}.jpeg", dpi=1000)
-    plt.show()
+    # plt.show()
 
     # V-Measure case
     bar = []
@@ -136,7 +135,7 @@ def plotJSON(fp):
 
     # plt.savefig("v_measure_linearcase{}.svg".format(number_of_runs))
     plt.savefig(f"plots/v_measure{number_of_runs}{fileext}.jpeg", dpi=1000)
-    plt.show()
+    # plt.show()
 
     # Adj-Rand case
     bar = []
@@ -159,7 +158,7 @@ def plotJSON(fp):
 
     # plt.savefig("adj_rand_linearcase{}.svg".format(number_of_runs))
     plt.savefig(f"plots/adj_rand{number_of_runs}{fileext}.jpeg", dpi=1000)
-    plt.show()
+    # plt.show()
 
     # Calinski-Harabasz case
     # bar = []
