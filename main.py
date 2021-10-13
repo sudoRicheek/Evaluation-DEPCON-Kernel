@@ -30,6 +30,8 @@ from utils.methods import (
     kkm_rbf
 )
 
+from plotter import plotJSON
+
 parser = argparse.ArgumentParser(description='Run tests.')
 parser.add_argument('-V', type=int, help='number of vertices')
 parser.add_argument('-r', '--runs', type=int, help='number of runs')
@@ -43,10 +45,11 @@ parser.add_argument('--LINCORR_ZERO', dest='LINCORR_ZERO', action='store_true')
 parser.add_argument('--SAME_MEAN', dest='SAME_MEAN', action='store_true')
 parser.add_argument('--NON_LINEAR', dest='NON_LINEAR', action='store_true')
 parser.add_argument('--SHUFFLE', dest='SHUFFLE', action='store_true')
+parser.add_argument('--PLOT', dest='PLOT', action='store_true')
 args = parser.parse_args()
 
 
-def multiple_runs_comparison(V=10, K=6, p=0.1, sample_size=600, runs=50, SAME_TC=False, CLUSTER_SEARCH=False, LINCORR_ZERO=False, SAME_MEAN=False, NON_LINEAR=False, search_range=np.arange(3, 13), shuffle=False):
+def multiple_runs_comparison(V=10, K=6, p=0.1, sample_size=600, runs=50, SAME_TC=False, CLUSTER_SEARCH=False, LINCORR_ZERO=False, SAME_MEAN=False, NON_LINEAR=False, PLOT=True, search_range=np.arange(3, 13), shuffle=False):
     METHOD_NAMES = ['rbf', 'depcon', 'poly', 'pkmeans']
     METHOD2FUNCS = [('depcon', kernel_k_means_depcon), ('rbf', kkm_rbf),
                     ('poly', kernel_k_means_poly), ('pkmeans', plain_kmeans)]
@@ -74,7 +77,7 @@ def multiple_runs_comparison(V=10, K=6, p=0.1, sample_size=600, runs=50, SAME_TC
             data = []
             for i in range(K//2):
                 d1, d2 = generate_sample_data_lincorrzero(
-                    dag_list[i], V=V, sample_size=sample_size//K)
+                    dag_list[i], V=V, sample_size=sample_size//K, SAME_MEAN=SAME_MEAN)
                 data.append(d1)
                 data.append(d2)
 
@@ -170,15 +173,17 @@ def multiple_runs_comparison(V=10, K=6, p=0.1, sample_size=600, runs=50, SAME_TC
     export_dict["calinski"] = calinski
 
     if LINCORR_ZERO:
-        with open(f'results/Lincorrzero_{V}_{K}_{p}_{runs}.json', 'w') as fp:
-            json.dump(export_dict, fp)
+        filename = f'results/Lincorrzero_{V}_{K}_{p}_{runs}_sametc{SAME_TC}_samemean{SAME_MEAN}.json'
     elif NON_LINEAR:
-        with open(f'results/Nonlinear_{V}_{K}_{p}_{runs}.json', 'w') as fp:
-            json.dump(export_dict, fp)
+        filename = f'results/Nonlinear_{V}_{K}_{p}_{runs}_sametc{SAME_TC}_samemean{SAME_MEAN}.json'
     else:
-        with open(f'results/Linear_{V}_{K}_{p}_{runs}_sametc{SAME_TC}_samemean{SAME_MEAN}.json', 'w') as fp:
-            json.dump(export_dict, fp)
-
+        filename = f'results/Linear_{V}_{K}_{p}_{runs}_sametc{SAME_TC}_samemean{SAME_MEAN}.json'
+    with open(filename, 'w') as fp:
+        json.dump(export_dict, fp)
+    with open(filename) as fp:
+        if PLOT:
+            plotJSON(fp)
+   
 
 if __name__ == "__main__":
     # Load seeds
@@ -198,9 +203,10 @@ if __name__ == "__main__":
     same_mean = args.SAME_MEAN
     non_linear = args.NON_LINEAR
     shuffle = args.SHUFFLE
+    plot = args.PLOT
     search_range = range(args.sl, args.su)
 
     multiple_runs_comparison(
         V=V, K=K, p=p, sample_size=sample_size, runs=runs, CLUSTER_SEARCH=True,
         SAME_TC=sametc, LINCORR_ZERO=lincorr_zero, NON_LINEAR=non_linear,
-        SAME_MEAN=same_mean, search_range=search_range, shuffle=shuffle)
+        SAME_MEAN=same_mean, PLOT=plot, search_range=search_range, shuffle=shuffle)
