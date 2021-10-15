@@ -1,17 +1,17 @@
 import json
 
 
-def save_seed(rand=246, np_rand=4812, np_rng=42, filename="utils/seed.json"):
+def save_seed(inpdict, filename="utils/seed.json"):
     """ saves seed into json. Called whenever a new seed is needed."""
-    dic = {"random.seed": rand, "np.random.seed": np_rand,
-           "np.random.default_rng": np_rng}
-    with open(filename, "wb") as f:
+    seed_list = ["random.seed", "np.random.seed", "np.random.default_rng", "rfi.sample.seed"]
+    dic = {x: inpdict[x] for x in seed_list}
+    with open(filename, "w") as f:
         json.dump(dic, f)
 
 
 def load_seed(filename="utils/seed.json"):
     """ loads seed json file. Called by all scripts that need the shared seed value """
-    with open(filename, "rb") as f:
+    with open(filename, "r") as f:
         data = json.load(f)
         return data
         

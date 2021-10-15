@@ -1,4 +1,4 @@
-from .dep_con_kernel_k_means import kernel_k_means_depcon
+from .dep_con_kkm import kkm_depcon, kkm_depcon_w_alpha
 from .kmeans import plain_kmeans
-from .poly_kern import kernel_k_means_poly
-from .rbf_kernel_k_means import kkm_rbf
+from .poly_kern import kkm_poly
+from .rbf_kernel_kkm import kkm_rbf

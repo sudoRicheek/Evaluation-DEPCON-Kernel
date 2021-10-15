@@ -159,23 +159,3 @@ def plotJSON(fp):
     # plt.savefig("adj_rand_linearcase{}.svg".format(number_of_runs))
     plt.savefig(f"plots/adj_rand{number_of_runs}{fileext}.jpeg", dpi=1000)
     # plt.show()
-
-    # Calinski-Harabasz case
-    # bar = []
-    # yerr = []
-    # for method_name in method_names:
-    #     bar += [calinski_means[method_name]]
-    #     yerr += [error_bounds_calinski[method_name]]
-
-    # barWidth = 0.3
-    # plt.figure(figsize=[8, 6])
-    # plt.bar(range(len(method_names)), bar, width=barWidth, color=['r','b','g','orchid'], alpha=0.7, edgecolor='black', linewidth=1.5, yerr=yerr, capsize=7, align='center')
-    # plt.xticks(range(len(method_names)), method_names_verbose, fontsize=13)
-    # plt.title(r"Calinski-Harabasz Score over {} randomized runs".format(number_of_runs), fontsize=18)
-    # plt.xlabel(r"\textbf{Clustering Algorithms}", fontsize=16)
-    # plt.ylabel(r"\textbf{Calinski-Harabasz Score}", fontsize=16)
-    # plt.yticks(fontsize=13)
-
-    # plt.savefig("calinski_linearcase{}.svg".format(number_of_runs))
-    # plt.savefig("calinski_linearcase{}.jpeg".format(number_of_runs), dpi=1000)
-    # plt.show()

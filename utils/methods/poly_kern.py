@@ -13,7 +13,7 @@ def d2_kernel(x, y):
     return np.dot(x, y.T) ** 2
 
 
-def kernel_k_means_poly(data, num_clus=5, kernel=d2_kernel, max_iters=100):
+def kkm_poly(data, num_clus=5, kernel=d2_kernel, max_iters=100):
     num_samps, num_feats = data.shape
     init = rng.choice(num_samps, num_clus, replace=False)
     # Normalise first!

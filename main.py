@@ -24,8 +24,8 @@ from utils.datagen import (
 )
 
 from utils.methods import (
-    kernel_k_means_depcon,
-    kernel_k_means_poly,
+    kkm_depcon,
+    kkm_poly,
     plain_kmeans,
     kkm_rbf
 )
@@ -51,8 +51,8 @@ args = parser.parse_args()
 
 def multiple_runs_comparison(V=10, K=6, p=0.1, sample_size=600, runs=50, SAME_TC=False, CLUSTER_SEARCH=False, LINCORR_ZERO=False, SAME_MEAN=False, NON_LINEAR=False, PLOT=True, search_range=np.arange(3, 13), shuffle=False):
     METHOD_NAMES = ['rbf', 'depcon', 'poly', 'pkmeans']
-    METHOD2FUNCS = [('depcon', kernel_k_means_depcon), ('rbf', kkm_rbf),
-                    ('poly', kernel_k_means_poly), ('pkmeans', plain_kmeans)]
+    METHOD2FUNCS = [('depcon', kkm_depcon), ('rbf', kkm_rbf),
+                    ('poly', kkm_poly), ('pkmeans', plain_kmeans)]
     METHOD2VERBOSE = {'rbf': "RBF", 'depcon': "DEP-CON", 'poly': "POLY-2D", 'pkmeans': "K-MEANS"}
 
     adj_rand = {N: [] for N in METHOD_NAMES}

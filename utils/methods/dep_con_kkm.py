@@ -130,8 +130,15 @@ def param_search_alpha(X, sr_range=[0.005, 0.01, 0.02, 0.03, 0.042, 0.043, 0.045
     return best_alpha, best_cluster
 
 
-def kernel_k_means_depcon(data, num_clus=6, kernel=dep_contrib_kernel, max_iters=100, alpha=0.05):
+def kkm_depcon(data, num_clus=6, kernel=dep_contrib_kernel, max_iters=100, alpha=0.05):
     best_alpha, best_cluster = param_search_alpha(
         data, num_clus=num_clus, metric=metrics.calinski_harabasz_score)
     print(best_alpha)
     return best_cluster
+
+# deprecated
+def kkm_depcon_w_alpha(data, num_clus=6, kernel=dep_contrib_kernel, max_iters=100, alpha=0.05):
+    best_alpha, best_cluster = param_search_alpha(
+        data, num_clus=num_clus, metric=metrics.calinski_harabasz_score)
+    print(best_alpha)
+    return best_alpha, best_cluster
